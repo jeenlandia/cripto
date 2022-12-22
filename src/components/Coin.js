@@ -1,30 +1,31 @@
 import React from "react";
 import RowCoin from "./RowCoin";
 
-const list = [ '#', 'Coin', 'Price', 'Market Cap', '24h Volume']
+const list = ['#', 'Coin', 'Price', 'Price Chance', 'Market Cap', 'Market Cap Change', '24h Volume']
 
-const Coin = ({coins}) => {
-    
-    return(
-       <table className="table table-dark mt-4 table-hover">
+const Coin = ({ coins, search }) => {
 
-        <thead>
-            <tr>
-                {
-                    list.map(list =>(
-                        <td> {list} </td>
-                    ))
-                }
-            </tr>
-        </thead>
+    const filterCoins = coins.filter((coin) => coin.name.toLowerCase().includes(search.toLowerCase()) |
+        coin.symbol.toLowerCase().includes(search.toLowerCase())
+    );
 
-        <tbody>
-            {coins.map((coin, index) => (
-                <RowCoin coin={coin} key={index} index={index + 1}/>   
-            ))} 
-        </tbody>
+    return (
 
-       </table>
+        <table className="table table-dark mt-4 table-hover">
+            <thead>
+                <tr>
+                    {list.map((list, index) => (
+                    <td key={index}>{list}</td>
+                    ))}
+                </tr>
+            </thead>
+
+            <tbody>
+                {filterCoins.map((coin, index) => (
+                    <RowCoin coin={coin} key={index} index={index + 1} />
+                ))}
+            </tbody>
+        </table>
     )
 }
 
